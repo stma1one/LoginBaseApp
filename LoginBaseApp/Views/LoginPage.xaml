@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LoginBaseApp.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:LoginBaseApp.Helper"
+    Title="LoginPage"
+    FlowDirection="RightToLeft">
+
+    <!--  רקע דף  -->
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Offset="0.0" Color="#3a7bd5" />
+            <GradientStop Offset="1.0" Color="Purple" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+
+
+    <VerticalStackLayout
+        Padding="30"
+        Spacing="25"
+        VerticalOptions="Center">
+
+        <!--  Title  -->
+        <Label
+            FontAttributes="Bold"
+            FontSize="32"
+            HorizontalOptions="Center"
+            Text="כניסה"
+            TextColor="Snow" />
+
+        <!--  Username  -->
+        <Border
+            Padding="10"
+            Stroke="#ccc"
+            StrokeShape="RoundRectangle 8"
+            StrokeThickness="1">
+            <Entry
+                x:Name="UsernameEntry"
+                FontSize="18"
+                Placeholder="שם משתמש"
+                TextColor="Wheat" />
+        </Border>
+
+        <!--  Password with eye icon  -->
+        <Border
+            Stroke="#ccc"
+            StrokeShape="RoundRectangle 8"
+            StrokeThickness="1">
+            <Grid
+                Padding="10"
+                ColumnDefinitions="*,Auto"
+                VerticalOptions="Center">
+                <Entry
+                    x:Name="PasswordEntry"
+                    BackgroundColor="Transparent"
+                    FontSize="18"
+                    IsPassword="True"
+                    Placeholder="סיסמה"
+                    TextColor="Wheat"
+                    VerticalOptions="Center" />
+                <Button
+                    x:Name="TogglePasswordButton"
+                    Margin="5,0,0,0"
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    Clicked="TogglePasswordVisiblity"
+                    FontFamily="MaterialSymbols"
+                    FontSize="24"
+                    HorizontalOptions="End"
+                    Text="&#xe8f4;"
+                    TextColor="White"
+                    VerticalOptions="Center" />
+            </Grid>
+        </Border>
+
+        <!--  כפתור כניסה  -->
+        <Button
+            BackgroundColor="#007AFF"
+            CornerRadius="8"
+            FontSize="18"
+            HeightRequest="50"
+            Text="הכנס"
+            TextColor="White" />
+        <Label
+            FontSize="45"
+            HorizontalTextAlignment="Center"
+            Text="שגיאה"
+            TextColor="RED" />
+
+    </VerticalStackLayout>
+</ContentPage>
+
