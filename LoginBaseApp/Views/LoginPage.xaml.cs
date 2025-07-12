@@ -33,16 +33,15 @@ public partial class LoginPage : ContentPage
 	private void OnLoginClick(object sender, EventArgs e)
 	{
 
+			errorLbl.IsVisible = false;
 		if (db.Login(UsernameEntry.Text, PasswordEntry.Text))
 		{
-			errorLbl.IsVisible = false;
 			errorLbl.Text = "התחברת";
 			errorLbl.TextColor = Colors.Green;
 			// Navigate to the next page or perform any other action
 		}
 		else
 		{
-			errorLbl.IsVisible = false;
 			errorLbl.Text = "שגיאת התחברות";
 			errorLbl.TextColor = Colors.Red;
 		}
