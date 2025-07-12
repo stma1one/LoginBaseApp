@@ -3,16 +3,14 @@
     x:Class="LoginBaseApp.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:helpers="clr-namespace:LoginBaseApp.Helper"
-    xmlns:local="clr-namespace:LoginBaseApp.Views"
     Title="LoginPage"
-    x:DataType="local:LoginPage"
     FlowDirection="RightToLeft">
 
     <!--  רקע דף  -->
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Offset="0.0" Color="#3a7bd5" />
+            <GradientStop Offset="0.0" Color="LightCyan" />
+            <GradientStop Offset="0.5" Color="#3a7bd5" />
             <GradientStop Offset="1.0" Color="Purple" />
         </LinearGradientBrush>
     </ContentPage.Background>
@@ -24,7 +22,7 @@
         Spacing="25"
         VerticalOptions="Center">
 
-        <!--  Title  -->
+        <!--  כותרת  -->
         <Label
             FontAttributes="Bold"
             FontSize="32"
@@ -32,7 +30,7 @@
             Text="כניסה"
             TextColor="Snow" />
 
-        <!--  Username  -->
+        <!--  שם משתמש  -->
         <Border
             Padding="10"
             Stroke="#ccc"
@@ -42,7 +40,6 @@
                 x:Name="UsernameEntry"
                 FontSize="18"
                 Placeholder="שם משתמש"
-                Text="{Binding Username}"
                 TextColor="Wheat" />
         </Border>
 
@@ -61,7 +58,6 @@
                     FontSize="18"
                     IsPassword="True"
                     Placeholder="סיסמה"
-                    Text="{Binding Password}"
                     TextColor="Wheat"
                     VerticalOptions="Center" />
                 <Button
@@ -73,7 +69,7 @@
                     FontFamily="MaterialSymbols"
                     FontSize="24"
                     HorizontalOptions="End"
-                    Text="&#xe8f4;"
+                    Text="&#xe8f5;"
                     TextColor="White"
                     VerticalOptions="Center" />
             </Grid>
@@ -85,9 +81,10 @@
             CornerRadius="8"
             FontSize="18"
             HeightRequest="50"
-            IsEnabled="{Binding LoginEnabled}"
+            IsEnabled="false"
             Text="חיבור"
             TextColor="White" />
+        <!--  שגיאה  -->
         <Label
             x:Name="errorLbl"
             FontSize="45"
