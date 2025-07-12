@@ -16,5 +16,11 @@ namespace LoginBaseApp.Service
 			users.Add(new Models.User { Username = "user1", Password = "password1" });
 			users.Add(new Models.User { Username = "user2", Password = "password2" });
 		}
+
+		public bool Login(string username, string password)
+		{
+			var user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
+			return user != null;
+		}
 	}
 }

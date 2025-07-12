@@ -4,7 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:helpers="clr-namespace:LoginBaseApp.Helper"
+    xmlns:local="clr-namespace:LoginBaseApp.Views"
     Title="LoginPage"
+    x:DataType="local:LoginPage"
     FlowDirection="RightToLeft">
 
     <!--  רקע דף  -->
@@ -40,10 +42,11 @@
                 x:Name="UsernameEntry"
                 FontSize="18"
                 Placeholder="שם משתמש"
+                Text="{Binding Username}"
                 TextColor="Wheat" />
         </Border>
 
-        <!--  Password with eye icon  -->
+        <!--  סיסמה עם כפתור צפייה  -->
         <Border
             Stroke="#ccc"
             StrokeShape="RoundRectangle 8"
@@ -58,6 +61,7 @@
                     FontSize="18"
                     IsPassword="True"
                     Placeholder="סיסמה"
+                    Text="{Binding Password}"
                     TextColor="Wheat"
                     VerticalOptions="Center" />
                 <Button
@@ -77,15 +81,18 @@
 
         <!--  כפתור כניסה  -->
         <Button
-            BackgroundColor="#007AFF"
+            Clicked="OnLoginClick"
             CornerRadius="8"
             FontSize="18"
             HeightRequest="50"
-            Text="הכנס"
+            IsEnabled="{Binding LoginEnabled}"
+            Text="חיבור"
             TextColor="White" />
         <Label
+            x:Name="errorLbl"
             FontSize="45"
             HorizontalTextAlignment="Center"
+            IsVisible="False"
             Text="שגיאה"
             TextColor="RED" />
 
