@@ -9,22 +9,15 @@ namespace LoginBaseApp.Service
 {
    public class ApiService:ILoginService
     {
-        HttpClient HttpClient
-		{
-			get; set;
-		}
+		// Example API endpoint for login, replace with your actual endpoint
 
 		public ApiService()
 		{
-			HttpClient = new HttpClient();
-			HttpClient.BaseAddress = new Uri("https://localhost:44324/");
-			HttpClient.DefaultRequestHeaders.Accept.Clear();
-			HttpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+			// Initialize any necessary services or configurations here
 		}
 		public bool Login(string username, string password)
 		{
-			var user = HttpClient.GetFromJsonAsync<Models.User>($"api/users/{username}/{password}").Result;
-			return user != null;
+			return true; // Placeholder for actual API call logic
 		}
 	}
 }
