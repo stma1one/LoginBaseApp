@@ -59,7 +59,7 @@
                     x:Name="PasswordEntry"
                     BackgroundColor="Transparent"
                     FontSize="18"
-                    IsPassword="True"
+                    IsPassword="{Binding IsPassword}"
                     Placeholder="סיסמה"
                     Text="{Binding Password}"
                     TextColor="Wheat"
@@ -90,12 +90,11 @@
             TextColor="White" />
         <!--  שגיאה  -->
         <Label
-            x:Name="errorLbl"
             FontSize="45"
             HorizontalTextAlignment="Center"
-            IsVisible="False"
-            Text="שגיאה"
-            TextColor="RED" />
+            IsVisible="{Binding MessageIsVisible}"
+            Text="{Binding LoginMessage}"
+            TextColor="{Binding MessageColor}" />
 
     </VerticalStackLayout>
 </ContentPage>

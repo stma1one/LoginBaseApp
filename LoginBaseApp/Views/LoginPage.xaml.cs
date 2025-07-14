@@ -10,6 +10,7 @@ public partial class LoginPage : ContentPage
 	DBMokup db;
 	private string _userName;
 	private string _password;
+	
 
 	public string UserName{
 		get => _userName;
@@ -36,10 +37,102 @@ public partial class LoginPage : ContentPage
 			}
 		}
 	}
-	
+
+	private bool messageIsVisible;
+
+	public bool MessageIsVisible
+	{
+		get
+		{
+			// Return the current visibility state of the message
+			return messageIsVisible;
+		}
+		set
+		{
+			if (messageIsVisible != value)
+			{
+				messageIsVisible = value;
+				OnPropertyChanged();
+			}
+			}
+	}
+	private Color messageColor;
+
+	public Color MessageColor
+	{
+		get
+		{
+			return messageColor;
+		}
+		set
+		{
+			if (messageColor != value)
+			{
+				messageColor = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	private bool isPassword;
+
+	public bool IsPassword
+	{
+		get
+		{
+			return isPassword;
+		}
+		set
+		{
+			if(isPassword != value)
+			{
+				isPassword = value;
+				OnPropertyChanged();
+			}
+			
+		}
+	}
+
+	private string showPasswordIcon;
+
+	public string ShowPasswordIcon
+	{
+		get
+		{
+			return showPasswordIcon;
+		}
+		set
+		{
+			if (showPasswordIcon != value)
+			{
+			showPasswordIcon = value;
+				OnPropertyChanged();
+			}
+		}
+	}
+
+
 	public bool IsEnabled
 	{
 		get => (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password));
+	}
+
+	private string loginMessage;
+
+	public string LoginMessage
+	{
+		get
+		{
+			return loginMessage;
+		}
+		set
+		{
+			if (loginMessage != value)
+			{
+				loginMessage = value;
+				OnPropertyChanged();
+			}
+		}
 	}
 
 	public LoginPage()
@@ -52,12 +145,12 @@ public partial class LoginPage : ContentPage
 
 	private void TogglePasswordVisiblity(object sender, EventArgs e)
 	{
-		Button? visBtn = sender as Button;
-		PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
-		if (PasswordEntry.IsPassword)
-			visBtn!.Text= FontHelper.CLOSED_EYE_ICON;
+		
+		IsPassword = !IsPassword;
+		if (IsPassword)
+			ShowPasswordIcon= FontHelper.CLOSED_EYE_ICON;
 		else
-			visBtn!.Text = FontHelper.OPEN_EYE_ICON;
+			ShowPasswordIcon = FontHelper.OPEN_EYE_ICON;
 
 
 
@@ -65,18 +158,18 @@ public partial class LoginPage : ContentPage
 
 	private void OnLoginClick(object sender, EventArgs e)
 	{
-
-			errorLbl.IsVisible = false;
-		if (db.Login(UsernameEntry.Text, PasswordEntry.Text))
+		//אם עובדים BINDING מומלץ לא לעבוד עם x:Name מטעמי קריאות ולהמיר הכל לBINIDNG
+		MessageIsVisible = true;
+		if (db.Login(UserName, Password))
 		{
-			errorLbl.Text = "התחברת";
-			errorLbl.TextColor = Colors.Green;
+			LoginMessage = AppMessages.LoginMessage;
+			MessageColor = Colors.Green;
 			// Navigate to the next page or perform any other action
 		}
 		else
 		{
-			errorLbl.Text = "שגיאת התחברות";
-			errorLbl.TextColor = Colors.Red;
+			LoginMessage = AppMessages.LoginErrorMessage;
+			MessageColor = Colors.Red;
 		}
 
 
