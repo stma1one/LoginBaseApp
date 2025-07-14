@@ -5,14 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LoginBaseApp.Models;
-	public class User
+
+/// <summary>
+/// מייצג את מודל הנתונים של משתמש באפליקציה.
+/// </summary>
+public class User
+{
+	/// <summary>
+	/// שם המשתמש לצורך הזדהות.
+	/// </summary>
+	public string? Username
 	{
-		public string Username
-		{
-			get; set;
-		}
-		public string Password
-		{
-			get; set;
-		}
+		get; set;
 	}
+
+	/// <summary>
+	/// סיסמת המשתמש.
+	/// </summary>
+	public string? Password
+	{
+		get; set;
+	}
+}

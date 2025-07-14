@@ -9,14 +9,21 @@ using System.Windows.Input;
 
 namespace LoginBaseApp.ViewModels
 {
-  public class LoginPageViewModel: ViewModelBase
+	/// <summary>
+	/// ה-ViewModel עבור דף ההתחברות. מנהל את הלוגיקה והמצב של הדף.
+	/// </summary>
+	public class LoginPageViewModel : ViewModelBase
 	{
+		// שדה פרטי לשמירת שירות ההתחברות שהוזרק
 		ILoginService db;
-		private string _userName;
-		private string _password;
 
+		private string? _userName;
+		private string? _password;
 
-		public string UserName
+		/// <summary>
+		/// שם המשתמש המוזן על ידי המשתמש ב-UI.
+		/// </summary>
+		public string? UserName
 		{
 			get => _userName;
 			set
@@ -24,15 +31,16 @@ namespace LoginBaseApp.ViewModels
 				if (_userName != value)
 				{
 					_userName = value;
-					OnPropertyChanged();
-					//OnPropertyChanged(nameof(IsEnabled));
-					(LoginCommand as Command).ChangeCanExecute();
-
-
+					OnPropertyChanged(); // מודיע ל-UI על שינוי כדי לעדכן את התצוגה
+					(LoginCommand as Command)?.ChangeCanExecute(); // בודק מחדש אם ניתן להפעיל את כפתור ההתחברות
 				}
 			}
 		}
-		public string Password
+
+		/// <summary>
+		/// הסיסמה המוזנת על ידי המשתמש ב-UI.
+		/// </summary>
+		public string? Password
 		{
 			get => _password;
 			set
@@ -40,22 +48,19 @@ namespace LoginBaseApp.ViewModels
 				if (_password != value)
 				{
 					_password = value;
-					OnPropertyChanged();
-					//OnPropertyChanged(nameof(IsEnabled));
-					(LoginCommand as Command).ChangeCanExecute();
+					OnPropertyChanged(); // מודיע ל-UI על שינוי
+					(LoginCommand as Command)?.ChangeCanExecute(); // בודק מחדש אם ניתן להפעיל את כפתור ההתחברות
 				}
 			}
 		}
 
 		private bool messageIsVisible;
-
+		/// <summary>
+		/// קובע אם הודעת המשוב (הצלחה/שגיאה) תוצג למשתמש.
+		/// </summary>
 		public bool MessageIsVisible
 		{
-			get
-			{
-				// Return the current visibility state of the message
-				return messageIsVisible;
-			}
+			get => messageIsVisible;
 			set
 			{
 				if (messageIsVisible != value)
@@ -65,14 +70,14 @@ namespace LoginBaseApp.ViewModels
 				}
 			}
 		}
-		private Color messageColor;
 
-		public Color MessageColor
+		private Color? messageColor;
+		/// <summary>
+		/// קובע את צבע הודעת המשוב (למשל, ירוק להצלחה ואדום לשגיאה).
+		/// </summary>
+		public Color? MessageColor
 		{
-			get
-			{
-				return messageColor;
-			}
+			get => messageColor;
 			set
 			{
 				if (messageColor != value)
@@ -84,13 +89,12 @@ namespace LoginBaseApp.ViewModels
 		}
 
 		private bool isPassword;
-
+		/// <summary>
+		/// קובע האם שדה הסיסמה יוצג כמוסתר (true) או גלוי (false).
+		/// </summary>
 		public bool IsPassword
 		{
-			get
-			{
-				return isPassword;
-			}
+			get => isPassword;
 			set
 			{
 				if (isPassword != value)
@@ -98,18 +102,16 @@ namespace LoginBaseApp.ViewModels
 					isPassword = value;
 					OnPropertyChanged();
 				}
-
 			}
 		}
 
-		private string showPasswordIcon;
-
-		public string ShowPasswordIcon
+		private string? showPasswordIcon;
+		/// <summary>
+		/// האייקון שיוצג עבור כפתור הצג/הסתר סיסמה.
+		/// </summary>
+		public string? ShowPasswordIcon
 		{
-			get
-			{
-				return showPasswordIcon;
-			}
+			get => showPasswordIcon;
 			set
 			{
 				if (showPasswordIcon != value)
@@ -120,20 +122,13 @@ namespace LoginBaseApp.ViewModels
 			}
 		}
 
-
-		//public bool IsEnabled
-		//{
-		//	get => (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password));
-		//}
-
-		private string loginMessage;
-
-		public string LoginMessage
+		private string? loginMessage;
+		/// <summary>
+		/// טקסט הודעת המשוב שתוצג למשתמש לאחר ניסיון התחברות.
+		/// </summary>
+		public string? LoginMessage
 		{
-			get
-			{
-				return loginMessage;
-			}
+			get => loginMessage;
 			set
 			{
 				if (loginMessage != value)
@@ -144,62 +139,80 @@ namespace LoginBaseApp.ViewModels
 			}
 		}
 
+		/// <summary>
+		/// בנאי של ה-ViewModel.
+		/// </summary>
+		/// <param name="service">שירות ההתחברות שיוזרק באמצעות Dependency Injection.</param>
 		public LoginPageViewModel(ILoginService service)
 		{
 			db = service;
+			// אתחול הפקודות והגדרת ערכים ראשוניים
 			ShowPasswordCommand = new Command(TogglePasswordVisiblity);
-			LoginCommand = new Command(Login, CanLogin);//()=> (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password)));
-			ShowPasswordIcon = FontHelper.CLOSED_EYE_ICON;
-			
+			LoginCommand = new Command(Login, CanLogin);
+			ShowPasswordIcon = FontHelper.CLOSED_EYE_ICON; // הגדרת אייקון ברירת מחדל
+			IsPassword = true; // הגדרת שדה הסיסמה כמוסתר כברירת מחדל
 		}
 
+		/// <summary>
+		/// תנאי הקובע אם ניתן להפעיל את פקודת ההתחברות.
+		/// </summary>
+		/// <returns>אמת אם גם שם המשתמש וגם הסיסמה אינם ריקים.</returns>
 		public bool CanLogin()
 		{
 			return (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password));
 		}
-		
 
+		/// <summary>
+		/// פקודה להצגה והסתרה של הסיסמה.
+		/// </summary>
 		public ICommand ShowPasswordCommand
 		{
 			get;
 		}
 
+		/// <summary>
+		/// פקודה לביצוע תהליך ההתחברות.
+		/// </summary>
 		public ICommand LoginCommand
 		{
 			get;
 		}
+
+		/// <summary>
+		/// מחליף את מצב התצוגה של הסיסמה (מוסתר/גלוי) ומעדכן את האייקון בהתאם.
+		/// </summary>
 		private void TogglePasswordVisiblity()
 		{
-
-			IsPassword = !IsPassword;
+			IsPassword = !IsPassword; // הופך את הערך הבוליאני
 			if (IsPassword)
 				ShowPasswordIcon = FontHelper.CLOSED_EYE_ICON;
 			else
 				ShowPasswordIcon = FontHelper.OPEN_EYE_ICON;
-
-
-
 		}
+
+		/// <summary>
+		/// מבצע את לוגיקת ההתחברות.
+		/// </summary>
 		private void Login()
 		{
+			IsBusy = true; // מסמן שהאפליקציה בתהליך (להצגת מחוון טעינה)
+			MessageIsVisible = true; // מציג את אזור הודעת המשוב
 
-			IsBusy = true;
-			MessageIsVisible = true;
-			if (db.Login(UserName, Password))
+			// קורא לשירות ההתחברות עם הפרטים שהוזנו
+			if (db.Login(UserName!, Password!))
 			{
+				// במקרה של הצלחה
 				LoginMessage = AppMessages.LoginMessage;
 				MessageColor = Colors.Green;
-				// Navigate to the next page or perform any other action
+				// כאן ניתן להוסיף ניווט לדף הבא
 			}
 			else
 			{
+				// במקרה של כישלון
 				LoginMessage = AppMessages.LoginErrorMessage;
 				MessageColor = Colors.Red;
 			}
-			IsBusy = false;
-
-
+			IsBusy = false; // מסיים את מצב "עסוק"
 		}
-
 	}
 }

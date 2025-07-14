@@ -7,17 +7,31 @@ using System.Threading.Tasks;
 
 namespace LoginBaseApp.Service
 {
-   public class ApiService:ILoginService
-    {
-		// Example API endpoint for login, replace with your actual endpoint
-
+	/// <summary>
+	/// מימוש של שירות ההתחברות המדמה קריאה ל-API חיצוני.
+	/// </summary>
+	public class ApiService : ILoginService
+	{
+		/// <summary>
+		/// בנאי של שירות ה-API.
+		/// כאן ניתן להגדיר תלויות כמו HttpClient או הגדרות תצורה.
+		/// </summary>
 		public ApiService()
 		{
 			// Initialize any necessary services or configurations here
 		}
+
+		/// <summary>
+		/// מבצע אימות פרטי משתמש מול שירות API.
+		/// </summary>
+		/// <param name="username">שם המשתמש.</param>
+		/// <param name="password">סיסמת המשתמש.</param>
+		/// <returns>אמת (true) אם ההתחברות הצליחה, אחרת שקר (false).</returns>
 		public bool Login(string username, string password)
 		{
-			return true; // Placeholder for actual API call logic
+			// זהו מימוש דמה (placeholder). בלוגיקה אמיתית, תתבצע כאן קריאת רשת
+			// לשרת שיאמת את הפרטים ויחזיר תשובה בהתאם.
+			return true;
 		}
 	}
 }
