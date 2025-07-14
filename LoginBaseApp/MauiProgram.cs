@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LoginBaseApp.Service;
+using Microsoft.Extensions.Logging;
 
 namespace LoginBaseApp
 {
@@ -17,8 +18,16 @@ namespace LoginBaseApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<Views.LoginPage>();
+            builder.Services.AddTransient<ViewModels.LoginPageViewModel>();
+
+			builder.Services.AddSingleton<ILoginService, DBMokup>();
+
+
+
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+			builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

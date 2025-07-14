@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LoginBaseApp.Service
 {
-	public class DBMokup
+	public class DBMokup:ILoginService
 	{
 		List<Models.User> users = new List<Models.User>();
 
